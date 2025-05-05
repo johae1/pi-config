@@ -1,15 +1,17 @@
 #!/bin/sh
 
 DAEMON="httpd"
+DAE_PATH="/usr/sbin/$DAEMON"
+PID_PATH="/var/run/$DAEMON"
 
 start() {
     printf 'Starting %s ' "$DAEMON"
-    start-stop-daemon -S -b -v --exec "/usr/sbin/$DAEMON"
+    start-stop-daemon -S -b -m -p "$PID_PATH" --exec "/usr/sbin/$DAEMON"
 }
 
 stop() {
     printf 'Stopping %s ' "$DAEMON"
-    start-stop-daemon -K -x "/usr/sbin/$DAEMON"
+    start-stop-daemon -K -p "$PID_PATH" -x "/usr/sbin/$DAEMON"
     [ $? = 0 ] && echo "OK" || echo "FAIL"
 }
 
