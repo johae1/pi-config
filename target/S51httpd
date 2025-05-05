@@ -6,7 +6,7 @@ PID_PATH="/var/run/$DAEMON"
 
 start() {
     printf 'Starting %s ' "$DAEMON"
-    start-stop-daemon -S -b -m -p "$PID_PATH" --exec "/usr/sbin/$DAEMON"
+    start-stop-daemon -S -b -m -p "$PID_PATH" --exec "/usr/sbin/$DAEMON" -- -f ""
 }
 
 stop() {
