@@ -1,17 +1,41 @@
 #!/bin/sh
 
+DAEMON="httpd"
+PIDFILE="var/run/$DAEMON.pid"
+
+start() {
+    printf 'Starting %s ' "$DAEMON"
+    start-stop-daemon --start --background --make-pidfile\
+            --pidfile "$PIDFILE" --exec "/usr/sbin/$DAEMON"
+}
+
+stop() {
+    printf 'Stopping %s ' "$DAEMON"
+    start-stop-daemon --stop --pidfile "$PIDFILE" --exec "/usr/sbin/$DAEMON"
+    [ $? = 0 ] && echo "OK" || echo "FAIL"
+}
+
+restart() {
+    printf 'Restarting %s' "$DAEMON"
+    stop
+    start
+}
+
+# Main
 case "$1" in
-  start)
-        echo "Starting Service ..."
-    /usr/sbin/httpd &
+    start)
+        start
         ;;
-  stop)
+    stop)
+        stop
         ;;
-  restart|reload)
+    restart|reload)
+        restart
         ;;
-  *)
+    *)
         echo "Usage: $0 {start|stop|restart}"
         exit 1
+        ;;
 esac
 
 exit $?
