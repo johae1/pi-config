@@ -1,12 +1,13 @@
 #!/bin/sh
 
-DAEMON="ntpd"
+DAEMON="wpa_supplicant"
 DAE_PATH="/usr/sbin/$DAEMON"
 PID_PATH="/var/run/$DAEMON.pid"
 
 start() {
     printf 'Starting %s: ' "$DAEMON"
-    start-stop-daemon -S -b -m -p "$PID_PATH" --exec "/usr/sbin/$DAEMON" -- -g
+    start-stop-daemon -S -b -m -p "$PID_PATH" --exec "/usr/sbin/$DAEMON"\
+		 -- -B w -D nl80211 -i wlan0 -c /etc/wpa_supplicant.conf
     [ $? = 0 ] && echo "OK" || echo "FAIL"
 }
 
