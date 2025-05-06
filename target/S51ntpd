@@ -1,12 +1,12 @@
 #!/bin/sh
 
-DAEMON="httpd"
+DAEMON="ntpd"
 DAE_PATH="/usr/sbin/$DAEMON"
 PID_PATH="/var/run/$DAEMON"
 
 start() {
     printf 'Starting %s: ' "$DAEMON"
-    start-stop-daemon -S -b -m -p "$PID_PATH" --exec "/usr/sbin/$DAEMON" -- -f ""
+    start-stop-daemon -S -b -m -p "$PID_PATH" --exec "/usr/sbin/$DAEMON" -- -g
     [ $? = 0 ] && echo "OK" || echo "FAIL"
 }
 

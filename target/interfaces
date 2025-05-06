@@ -2,11 +2,18 @@ auto lo
 iface lo inet loopback
 
 auto eth0
-iface eth0 inet static
+iface eth0 inet dhcp
+#  address 192.168.178.171
+#  netmask 255.255.255.0
+#  gateway 192.168.178.1
+#  dns-nameservers 192.168.178.1
+  pre-up /etc/network/nfs_check
+  wait-delay 15
+  hostname $(hostname)
+
+auto eth0:0
+iface eth0:0 inet static
   address 192.168.178.171
   netmask 255.255.255.0
   gateway 192.168.178.1
   dns-nameservers 192.168.178.1
-  pre-up /etc/network/nfs_check
-  wait-delay 15
-  hostname $(hostname)
