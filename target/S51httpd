@@ -14,6 +14,7 @@ stop() {
     printf 'Stopping %s ' "$DAEMON"
     start-stop-daemon -K -p "$PID_PATH" -x "/usr/sbin/$DAEMON"
     [ $? = 0 ] && echo "OK" || echo "FAIL"
+    rm "$PID_PATH"
 }
 
 restart() {

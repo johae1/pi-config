@@ -7,7 +7,7 @@ PID_PATH="/var/run/$DAEMON.pid"
 start() {
     printf 'Starting %s: ' "$DAEMON"
     start-stop-daemon -S -b -m -p "$PID_PATH" --exec "/usr/sbin/$DAEMON"\
-		 -- -B w -D nl80211 -i wlan0 -c /etc/wpa_supplicant.conf
+		 -- -P "$PID_PATH" -B w -D nl80211 -i wlan0 -c /etc/wpa_supplicant.conf
     [ $? = 0 ] && echo "OK" || echo "FAIL"
 }
 
